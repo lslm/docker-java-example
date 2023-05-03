@@ -1,0 +1,21 @@
+version: "2"
+services:
+  database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: docker-example-user
+      POSTGRES_PASSWORD: docker-example-password
+      POSTGRES_DB: docker-example
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      DB_URL: jdbc:postgresql://database/docker-example
+      DB_USER: docker-example-user
+      DB_PASSWORD: docker-example-password
